@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  </head>
+
+  <body>
+
+
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li><a href="/">Home</a></li>
+                  <li class="active"><a href="#">LogIn</a></li>
+                  <li><a href="/signup">SignUp</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+              </nav>
+              <form class="form-signin">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <label for="inputEmail" class="sr-only">Username</label>
+                <input type="text" id="username" class="form-control" placeholder="Username" required="" autofocus="">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                
+                <button id="btnSignIn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              </form>
+
+              <ul id="errors"></ul>
+         
+
+    <script type="text/javascript" src="../script/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        $('#btnSignIn').click(function(evt){
+          evt.preventDefault();
+          var username = $('#username').val();
+          var password = $('#inputPassword').val();
+          $.post('/login', {'username': username, 'password': password})
+          .then(function(response){
+              console.log(response);
+              $('#errors').html("")
+              if(response.status == "Failed") {
+                response.errors.forEach(function(error) {
+                  $('#errors').append('<li>' + error.msg + '</li>')
+                })
+              } else {
+                $('#errors').append('<li>' + response + '</li>')
+              }
+          });
+        })
+      })
+     
+    </script>
+
+  </body>
+</html>
