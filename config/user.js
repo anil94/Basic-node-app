@@ -1,7 +1,8 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('SecondDatabase', 'root', 'root');
 
-var Users = sequelize.define('Users', {
+var Users = {}
+Users.local = sequelize.define('Users', {
 	Username : {
 		type : Sequelize.STRING,
 		allowNull : false,
@@ -41,11 +42,29 @@ var Users = sequelize.define('Users', {
 	comment: "Users table is used for storing the personal details of a User."
 });
 
-sequelize.sync({force: false}).then(
-	function(err) {
+Users.google = sequelize.define('GoogleUser', {
+	GoogleId : {
+		type : Sequelize.STRING,
+		allowNull : false
 	},
-	function(err) {
+	Token : {
+		type : Sequelize.STRING,
+		allowNull : false
+	},
+	Email : {
+		type : Sequelize.STRING,
+		allowNull : false,
+		unique: true,
+		validate : {
+			isEmail: true,
+			notEmpty: true
+		}
+	},
+	Name : {
+		type : Sequelize.STRING
 	}
-)
+});
+
+sequelize.sync()
 
 module.exports = {'Sequelize' : sequelize, 'Users' : Users };

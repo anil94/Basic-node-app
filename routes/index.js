@@ -12,13 +12,11 @@
 }));*/
 
 module.exports = function(app, express, passport) {
-var router = express.Router();
-/* GET home page. */
-router.get('/', function(req, res) {
-  // res.render('index', { title: 'Express' });
-  console.log
-  res.sendFile('home.html',{'root': __dirname + '/../templates'});
-});
-return router;
+	var router = express.Router();
+	/* GET home page. */
+	router.get('/', function(req, res) {
+	  res.sendFile('home.html',{'root': __dirname + '/../templates'});
+	});
+	return router;
 }
 //module.exports = router;

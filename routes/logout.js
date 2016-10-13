@@ -18,15 +18,15 @@ var sequelize = require('../config/user').Sequelize;
 var Users = require('../config/user').Users;
 
 module.exports = function(app, express, passport) {
-var router = express.Router();
-/* Logout option. */
-router.get('/', function(req, res) {
-	if (req.session.username) {
-		req.session.destroy()
-		res.send('Successfully logged out!');
-	} else {
-		res.send("Not logged in");
-	}
-});
-return router;
+	var router = express.Router();
+	/* Logout option. */
+	router.get('/', function(req, res) {
+		if (req.user) {
+			req.logout()
+			res.send('Successfully logged out!');
+		} else {
+			res.send("Not logged in");
+		}
+	});
+	return router;
 }

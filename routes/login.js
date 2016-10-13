@@ -24,8 +24,8 @@ var Users = require('../config/user').Users;
 module.exports = function(app, express, passport) {
 	var router = express.Router();
 	router.get('/', function(req, res) {
-		if (req.session.username)
-			res.send('Hi, ' + req.session.username);
+		if (req.user)
+			res.send('Logged in as ' + req.user.Email);
 		else {
 			res.sendFile('/login.html',{'root': template_root});
 		}
@@ -62,6 +62,9 @@ module.exports = function(app, express, passport) {
 				});	
 			}
 		}*/
+
+
+		// If session exists
 		if (req.user) {
 			res.send("Already logged in!")
 		} else {
@@ -73,7 +76,22 @@ module.exports = function(app, express, passport) {
 				}
 			})(req, res)
 		}
-	});	
+	});
+
+	router.get('/oauth2/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+	router.get('/oauth2/google/callback', function(req, res) {
+		console.log("Reached callback...")
+		passport.authenticate('google', function(err, user, info) {
+			console.log("Reached final callback...")
+			if (user) {
+				res.send(info)
+			} else {
+				console.log(err)
+			}
+		})(req, res)
+	})
+
 	return router;
 }
 

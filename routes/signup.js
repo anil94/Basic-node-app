@@ -11,8 +11,8 @@ var template_root = __dirname + '/../templates'
 module.exports = function(app, express, passport) {
 var router = express.Router();
 router.get('/', function(req, res) {
-	if (req.session.username)
-		res.send('Hi, ' + req.session.username);
+	if (req.user)
+		res.send('Logged in as ' + req.user.Email);
 	else {
 		res.sendFile('/signin.html',{'root': template_root});
 	}
