@@ -8,7 +8,8 @@ var sequelize = require('../config/user').Sequelize;
 var Users = require('../config/user').Users;
 var template_root = __dirname + '/../templates'
 
-
+module.exports = function(app, express, passport) {
+var router = express.Router();
 router.get('/', function(req, res) {
 	if (req.session.username)
 		res.send('Hi, ' + req.session.username);
@@ -64,5 +65,5 @@ router.post('/', function(req, res) {
 		});
 	}
 });
-
-module.exports = router;
+return router;
+}

@@ -3,9 +3,9 @@ var Sequelize = require('sequelize');
 var passwordhash = require('password-hash');
 // var session = require('express-session');
 
-var app = express();
+// var app = express();
 
-var router = express.Router();
+// var router = express.Router();
 
 /*app.use(session({
 	secret: 'This is a secret that nobody knows!',
@@ -17,6 +17,8 @@ var router = express.Router();
 var sequelize = require('../config/user').Sequelize;
 var Users = require('../config/user').Users;
 
+module.exports = function(app, express, passport) {
+var router = express.Router();
 /* Logout option. */
 router.get('/', function(req, res) {
 	if (req.session.username) {
@@ -26,5 +28,5 @@ router.get('/', function(req, res) {
 		res.send("Not logged in");
 	}
 });
-
-module.exports = router;
+return router;
+}

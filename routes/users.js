@@ -1,8 +1,8 @@
 var express = require('express');
-var router = express.Router();
-// var session = require('express-session');
+// var router = express.Router();
+// // var session = require('express-session');
 
-var app = express();
+// var app = express();
 
 /*app.use(session({
   secret: 'This is a secret that nobody knows!',
@@ -10,10 +10,11 @@ var app = express();
   saveUninitialized: true,
   cookie: {}
 }));*/
-
+module.exports = function(app, express, passport) {
+var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-
-module.exports = router;
+return router;
+}

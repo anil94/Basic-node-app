@@ -6,13 +6,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var signup = require('./routes/signup');
-var login = require('./routes/login');
-var logout = require('./routes/logout');
+var passport = require('passport');
+var flash    = require('connect-flash');
 
 var app = express();
 
@@ -35,6 +30,16 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash());
+
+var routes = require('./routes/index')(app, express, passport);
+var users = require('./routes/users')(app, express, passport);
+var signup = require('./routes/signup')(app, express, passport);
+var login = require('./routes/login')(app, express, passport);
+var logout = require('./routes/logout')(app, express, passport);
+require('./config/passport')(passport);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/signup', signup);

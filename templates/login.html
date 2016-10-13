@@ -40,11 +40,14 @@
               $('#errors').html("")
               if(response.status == "Failed") {
                 response.errors.forEach(function(error) {
+                  console.log(error.msg)
                   $('#errors').append('<li>' + error.msg + '</li>')
                 })
               } else {
                 $('#errors').append('<li>' + response + '</li>')
               }
+          }, function(err) {
+            console.log("qqqqqqqq")
           });
         })
       })
