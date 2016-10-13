@@ -1,7 +1,3 @@
-# SECOND 
-
-This is the repository for Second application given as Internal Project.
-
 ## Usage
 
 1. Make sure that you have npm installed.
